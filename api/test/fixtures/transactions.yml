@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_transaction: 1
+  type_transaction: MyString
+  coin_send: MyString
+  coin_receive: MyString
+  total_send: MyString
+  total_receive: 9.99
+
+two:
+  id_transaction: 1
+  type_transaction: MyString
+  coin_send: MyString
+  coin_receive: MyString
+  total_send: MyString
+  total_receive: 9.99
