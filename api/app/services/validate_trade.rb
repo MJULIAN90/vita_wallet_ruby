@@ -6,18 +6,6 @@ def validate_trade(
   total_send,
   total_receive
 )
-  transaction_user =
-    Transaction.create(
-      {
-        user_id: user_id,
-        type_transaction: type_transaction,
-        coin_send: coin_send,
-        coin_receive: coin_receive,
-        total_send: total_send,
-        total_receive: total_receive,
-      },
-    )
-
   balance_user = Balance.find_by(user_id: user_id)
 
   if coin_receive == 'usd'
@@ -25,6 +13,16 @@ def validate_trade(
       balance_user[:btc] = balance_user[:btc] - total_send
       balance_user[:usd] = balance_user[:usd] + total_receive
       balance_user.save
+      Transaction.create(
+        {
+          user_id: user_id,
+          type_transaction: type_transaction,
+          coin_send: coin_send,
+          coin_receive: coin_receive,
+          total_send: total_send,
+          total_receive: total_receive,
+        },
+      )
       return { 'Response': 'Transaccion Exitosa' }
     else
       return { 'Response': 'Fondos Insuficientes' }
@@ -36,6 +34,16 @@ def validate_trade(
       balance_user[:btc] = balance_user[:btc] + total_receive
       balance_user[:usd] = balance_user[:usd] - total_send
       balance_user.save
+      Transaction.create(
+        {
+          user_id: user_id,
+          type_transaction: type_transaction,
+          coin_send: coin_send,
+          coin_receive: coin_receive,
+          total_send: total_send,
+          total_receive: total_receive,
+        },
+      )
       return { 'Response': 'Transaccion Exitosa' }
     else
       return { 'Response': 'Fondos Insuficientes' }
