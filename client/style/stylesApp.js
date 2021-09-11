@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  //global
+  //Global
   inicial: {
     flex: 1,
     backgroundColor: "black",
