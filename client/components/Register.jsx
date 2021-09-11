@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { styles } from "./../style/Register";
 import axios from "axios";
+import { styles, loginRegister } from "./../style/stylesApp";
+import { REACT_APP_API } from "../api/api";
 
 const Register = () => {
-  let REACT_APP_API = "http://localhost:3000";
   const navigation = useNavigation();
-
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
@@ -36,15 +35,15 @@ const Register = () => {
   return (
     <View style={styles.inicial}>
       <Image
-        style={styles.tinyLogo}
+        style={loginRegister.tinyLogo}
         source={{
           uri: "https://github.com/andresf2448/Exchange-ProyectoFinal/raw/main/client/rocketXchange-logos/rocketXchange-logos_white.png",
         }}
       />
 
-      <View style={styles.container}>
+      <View style={loginRegister.container}>
         <TextInput
-          style={styles.inputs}
+          style={loginRegister.inputs}
           placeholder="NUEVO USUARIO"
           placeholderTextColor="white"
           value={user}
@@ -53,7 +52,7 @@ const Register = () => {
 
         <TextInput
           secureTextEntry={true}
-          style={styles.inputs}
+          style={loginRegister.inputs}
           placeholder="NUEVA CONTRASEÑA"
           placeholderTextColor="white"
           value={password}
@@ -62,7 +61,7 @@ const Register = () => {
 
         <TextInput
           secureTextEntry={true}
-          style={styles.inputs}
+          style={loginRegister.inputs}
           placeholder="CONFIRME LA CONTRASEÑA"
           placeholderTextColor="white"
           value={password2}
@@ -70,24 +69,24 @@ const Register = () => {
         />
       </View>
       {password !== "" && password === password2 ? (
-        <TouchableOpacity onPress={handleSumit} style={styles.button}>
-          <Text style={styles.texto}>COMPLETAR</Text>
+        <TouchableOpacity onPress={handleSumit} style={loginRegister.button}>
+          <Text style={loginRegister.texto}>COMPLETAR</Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
           disabled={true}
           onPress={handleSumit}
-          style={styles.button2}
+          style={{ ...loginRegister.button, backgroundColor: "gray" }}
         >
-          <Text style={styles.texto}>COMPLETAR</Text>
+          <Text style={{ fontSize: 22 }}>COMPLETAR</Text>
         </TouchableOpacity>
       )}
 
       <TouchableOpacity
         onPress={() => navigation.navigate("Login")}
-        style={styles.button}
+        style={loginRegister.button}
       >
-        <Text style={styles.texto}>Volver</Text>
+        <Text style={{ fontSize: 22 }}>VOLVER</Text>
       </TouchableOpacity>
     </View>
   );

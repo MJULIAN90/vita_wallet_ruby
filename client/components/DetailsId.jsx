@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { styles } from "./../style/DetailsId";
 import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { conversor } from "../conversor/conversor";
+import { REACT_APP_API } from "../api/api";
+import { styles, detailsId } from "./../style/stylesApp";
 
 const DetailsId = ({ route }) => {
-  let REACT_APP_API = "http://localhost:3000";
   const navigation = useNavigation();
   const [state, setstate] = useState();
 
@@ -29,10 +29,10 @@ const DetailsId = ({ route }) => {
   }, []);
 
   return (
-    <View style={styles.inicio}>
+    <View style={styles.inicial}>
       <TouchableOpacity
         onPress={() => navigation.navigate("Home")}
-        style={styles.salir}
+        style={styles.botonSalir}
       >
         <Text style={styles.textoSalir}>VOLVER</Text>
       </TouchableOpacity>
@@ -50,25 +50,27 @@ const DetailsId = ({ route }) => {
             } = item;
 
             return (
-              <View style={styles.container} key={i}>
-                <Text style={styles.infoII}>ID TRANSACION:</Text>
-                <Text style={styles.infoI}>{id}</Text>
-                <Text style={styles.infoII}>FECHA DE TRANSACION:</Text>
-                <Text style={styles.infoI}>{created_at.slice(0, 10)}</Text>
-                <Text style={styles.infoII}>TIPO DE TRANSACION:</Text>
-                <Text style={styles.infoI}>
+              <View style={detailsId.container} key={i}>
+                <Text style={detailsId.infoII}>ID TRANSACION:</Text>
+                <Text style={detailsId.infoI}>{id}</Text>
+                <Text style={detailsId.infoII}>FECHA DE TRANSACION:</Text>
+                <Text style={detailsId.infoI}>{created_at.slice(0, 10)}</Text>
+                <Text style={detailsId.infoII}>TIPO DE TRANSACION:</Text>
+                <Text style={detailsId.infoI}>
                   {type_transaction.toUpperCase()}
                 </Text>
-                <Text style={styles.infoII}>MONEDA ENVIADA:</Text>
-                <Text style={styles.infoI}>{coin_send.toUpperCase()}</Text>
-                <Text style={styles.infoII}>CANTIDAD ENVIADA:</Text>
-                <Text style={styles.infoI}>
+                <Text style={detailsId.infoII}>MONEDA ENVIADA:</Text>
+                <Text style={detailsId.infoI}>{coin_send.toUpperCase()}</Text>
+                <Text style={detailsId.infoII}>CANTIDAD ENVIADA:</Text>
+                <Text style={detailsId.infoI}>
                   {conversor(coin_send, total_send)}
                 </Text>
-                <Text style={styles.infoII}>MONEDA RECIBIDA:</Text>
-                <Text style={styles.infoI}>{coin_receive.toUpperCase()}</Text>
-                <Text style={styles.infoII}>CANTIDAD RECIBIDA:</Text>
-                <Text style={styles.infoI}>
+                <Text style={detailsId.infoII}>MONEDA RECIBIDA:</Text>
+                <Text style={detailsId.infoI}>
+                  {coin_receive.toUpperCase()}
+                </Text>
+                <Text style={detailsId.infoII}>CANTIDAD RECIBIDA:</Text>
+                <Text style={detailsId.infoI}>
                   {conversor(coin_receive, total_receive)}
                 </Text>
               </View>

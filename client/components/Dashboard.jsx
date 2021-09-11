@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { styles } from "./../style/Dashboard";
-import { conversor } from "../conversor/conversor";
 import { View, Text, ActivityIndicator, Image } from "react-native";
 import axios from "axios";
+import { REACT_APP_API } from "../api/api";
+import { dashboard, styles } from "./../style/stylesApp";
+import { conversor } from "../conversor/conversor";
 import ButtonExit from "./ButtonExit";
 
 const Dashboard = () => {
-  let REACT_APP_API = "http://localhost:3000";
   const [state, setstate] = useState(false);
 
   const api = async () => {
@@ -24,10 +24,10 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <View style={styles.inicio}>
+    <View style={dashboard.inicio}>
       <ButtonExit />
-      <View style={styles.info}>
-        <Text style={styles.texto}>PRECIO BTC </Text>
+      <View style={dashboard.info}>
+        <Text style={styles.textoComentario}>PRECIO BTC </Text>
         {!state ? (
           <ActivityIndicator
             size="large"
@@ -35,11 +35,11 @@ const Dashboard = () => {
             style={{ paddingTop: 20 }}
           />
         ) : (
-          <Text style={styles.texto}>{state} USD</Text>
+          <Text style={styles.textoComentario}>{state} USD</Text>
         )}
       </View>
       <Image
-        style={styles.tinyLogo}
+        style={dashboard.logBtc}
         source={{
           uri: "https://img.freepik.com/vector-gratis/concepto-blockchain-moneda-criptografica-tecnologia-bitcoin_1017-30297.jpg?size=626&ext=jpg",
         }}

@@ -1,16 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { styles } from "./../style/Transactions";
 import { View, Text, FlatList } from "react-native";
-import { UserContext } from "../Context";
 import axios from "axios";
+import { UserContext } from "../Context";
 import CardTransaction from "./CardTransaction";
 import ButtonExit from "./ButtonExit";
+import { REACT_APP_API } from "../api/api";
+import { styles } from "./../style/stylesApp";
 
 const Transactions = () => {
-  let REACT_APP_API = "http://localhost:3000";
   const context = useContext(UserContext);
   const { userid, transactionsH } = context;
-
   const [state, setstate] = useState();
 
   const history = async () => {
@@ -32,11 +31,13 @@ const Transactions = () => {
   }, [transactionsH]);
 
   return (
-    <View style={styles.inicio}>
+    <View style={styles.inicial}>
       <ButtonExit />
 
       {state && state.length === 0 ? (
-        <Text style={styles.texto}>Usuario no posee transacciones</Text>
+        <Text style={styles.textoComentario}>
+          Usuario no posee transacciones
+        </Text>
       ) : (
         <FlatList
           data={state}

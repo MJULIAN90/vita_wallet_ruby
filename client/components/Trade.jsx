@@ -1,26 +1,25 @@
 import React, { useState, useEffect, useContext } from "react";
-import { styles } from "../style/Trade";
 import { View, Picker, Button, TextInput, Text } from "react-native";
 import axios from "axios";
 import { UserContext } from "../Context";
 import { conversorQuanti } from "../conversor/conversorQuanti";
 import { conversor } from "./../conversor/conversor";
 import ButtonExit from "./ButtonExit";
+import { REACT_APP_API } from "../api/api";
+import { styles, trade } from "../style/stylesApp";
 
 const Trade = () => {
-  let REACT_APP_API = "http://localhost:3000";
   const context = useContext(UserContext);
   const { userid, setTransactionsH, transactionsH } = context;
-
   const [selectedValue, setSelectedValue] = useState("usd");
   const [selectTrade, setselectTrade] = useState("buy");
   const [quantity, setQuantity] = useState("");
+  const [status, setStatus] = useState(true);
+  const [totalChange, setTotalChange] = useState();
   const [infoBalances, setInfoBalances] = useState({
     usd: "",
     btc: "",
   });
-  const [status, setStatus] = useState(true);
-  const [totalChange, setTotalChange] = useState();
 
   const balances = async () => {
     let obj = {
@@ -61,7 +60,6 @@ const Trade = () => {
   const calculate = async () => {
     let price = await axios(`${REACT_APP_API}/price`);
 
-    console.log(price);
     let btcprice = price.data.response;
 
     if (selectedValue === "btc" && quantity !== "") {
@@ -151,11 +149,11 @@ const Trade = () => {
   };
 
   return (
-    <View style={styles.inicio}>
+    <View style={styles.inicial}>
       <ButtonExit />
-      <View style={styles.balance}>
-        <Text style={styles.negrita}>TU BALANCE</Text>
-        <Text style={styles.negrita}>
+      <View style={trade.balance}>
+        <Text style={trade.negrita}>TU BALANCE</Text>
+        <Text style={trade.negrita}>
           USD:{" "}
           {infoBalances.usd ? (
             conversor("usd", infoBalances.usd)
@@ -163,7 +161,7 @@ const Trade = () => {
             <Text> Cargando ... </Text>
           )}
         </Text>
-        <Text style={styles.negrita}>
+        <Text style={trade.negrita}>
           BTC:{" "}
           {infoBalances.btc ? (
             conversor("btc", infoBalances.btc)
@@ -174,8 +172,8 @@ const Trade = () => {
       </View>
 
       <View>
-        <View style={styles.container}>
-          <Text style={styles.negrita}> TIPO DE OPERACION </Text>
+        <View style={trade.container}>
+          <Text style={trade.negrita}> TIPO DE OPERACION </Text>
           <Picker
             selectedValue={selectTrade}
             style={{
@@ -193,11 +191,11 @@ const Trade = () => {
           </Picker>
         </View>
 
-        <View style={styles.container}>
+        <View style={trade.container}>
           {selectTrade === "buy" ? (
-            <Text style={styles.negrita}> MONEDA A COMPRAR</Text>
+            <Text style={trade.negrita}> MONEDA A COMPRAR</Text>
           ) : (
-            <Text style={styles.negrita}> MONEDA A VENDER </Text>
+            <Text style={trade.negrita}> MONEDA A VENDER </Text>
           )}
 
           <Picker
@@ -216,7 +214,7 @@ const Trade = () => {
           </Picker>
         </View>
 
-        <View style={styles.container}>
+        <View style={trade.container}>
           <TextInput
             placeholder="INGRESA CANTIDAD "
             placeholderTextColor="#000"
@@ -231,42 +229,42 @@ const Trade = () => {
             value={quantity}
           />
           {selectTrade === "buy" ? (
-            <Text style={styles.negrita1}>
+            <Text style={trade.negrita1}>
               ¿CUÁNTOS {selectedValue.toUpperCase()} DESEA COMPRAR? INGRESA LA
               CANTIDAD EN FORMATO DE MONEDA INTERNACIONAL
             </Text>
           ) : (
-            <Text style={styles.negrita1}>
+            <Text style={trade.negrita1}>
               ¿CUÁNTOS {selectedValue.toUpperCase()} DESEA VENDER? INGRESA LA
               CANTIDAD EN FORMATO DE MONEDA INTERNACIONAL
             </Text>
           )}
         </View>
 
-        <View style={styles.container}>
+        <View style={trade.container}>
           {selectTrade === "buy" && (
-            <Text style={styles.negrita}> DEBES TENER . . .</Text>
+            <Text style={trade.negrita}> DEBES TENER . . .</Text>
           )}
 
           {selectTrade === "sell" && (
-            <Text style={styles.negrita}> RECIBIRÁS </Text>
+            <Text style={trade.negrita}> RECIBIRÁS </Text>
           )}
 
           {totalChange ? (
             <Text>
-              <Text style={styles.negrita}>
+              <Text style={trade.negrita}>
                 {selectedValue === "usd"
                   ? conversor("btc", totalChange)
                   : conversor("usd", totalChange)}
               </Text>
               {selectedValue === "usd" ? (
-                <Text style={styles.negrita}> BTC </Text>
+                <Text style={trade.negrita}> BTC </Text>
               ) : (
-                <Text style={styles.negrita}> USD </Text>
+                <Text style={trade.negrita}> USD </Text>
               )}
             </Text>
           ) : (
-            <Text style={styles.negrita}>
+            <Text style={trade.negrita}>
               PRESIONA CALCULAR PARA PODER OPERAR
             </Text>
           )}

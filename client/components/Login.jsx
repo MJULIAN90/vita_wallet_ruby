@@ -1,17 +1,15 @@
 import React, { useContext, useState } from "react";
-import { styles } from "./../style/Login";
 import { TouchableOpacity, Text, View, TextInput, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { UserContext } from "../Context";
+import { REACT_APP_API } from "../api/api";
+import { styles, loginRegister } from "./../style/stylesApp";
 
 const Login = () => {
-  let REACT_APP_API = "http://localhost:3000";
   const context = useContext(UserContext);
-
-  const { setUserid } = context;
-
   const navigation = useNavigation();
+  const { setUserid } = context;
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
 
@@ -33,21 +31,21 @@ const Login = () => {
         return navigation.navigate("Home", { data: response });
       }
     }
-
     alert("COMPLETE LOS CAMPOS");
   };
+
   return (
     <View style={styles.inicial}>
       <Image
-        style={styles.tinyLogo}
+        style={loginRegister.tinyLogo}
         source={{
           uri: "https://github.com/andresf2448/Exchange-ProyectoFinal/raw/main/client/rocketXchange-logos/rocketXchange-logos_white.png",
         }}
       />
 
-      <View style={styles.container}>
+      <View style={loginRegister.container}>
         <TextInput
-          style={styles.inputs}
+          style={loginRegister.inputs}
           placeholder="USUARIO"
           placeholderTextColor="white"
           value={user}
@@ -56,7 +54,7 @@ const Login = () => {
 
         <TextInput
           secureTextEntry={true}
-          style={styles.inputs}
+          style={loginRegister.inputs}
           placeholder="CONTRASEÑA"
           placeholderTextColor="white"
           value={password}
@@ -64,16 +62,16 @@ const Login = () => {
         />
       </View>
 
-      <TouchableOpacity onPress={handleSumit} style={styles.button}>
-        <Text style={styles.texto}>Entrar</Text>
+      <TouchableOpacity onPress={handleSumit} style={loginRegister.button}>
+        <Text style={loginRegister.texto}>Entrar</Text>
       </TouchableOpacity>
 
-      <View style={styles.register}>
+      <View style={loginRegister.register}>
         <TouchableOpacity
           onPress={() => navigation.navigate("Register")}
-          style={styles.button}
+          style={loginRegister.button}
         >
-          <Text style={styles.texto}>Registrarse</Text>
+          <Text style={loginRegister.texto}>Registrarse</Text>
         </TouchableOpacity>
       </View>
     </View>
