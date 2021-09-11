@@ -1,16 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { styles } from "./../style/Transactions";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, Text, FlatList } from "react-native";
 import { UserContext } from "../Context";
 import axios from "axios";
 import CardTransaction from "./CardTransaction";
+import ButtonExit from "./ButtonExit";
 
 const Transactions = () => {
   let REACT_APP_API = "http://localhost:3000";
   const context = useContext(UserContext);
   const { userid, transactionsH } = context;
-  const navigation = useNavigation();
 
   const [state, setstate] = useState();
 
@@ -34,12 +33,7 @@ const Transactions = () => {
 
   return (
     <View style={styles.inicio}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Login")}
-        style={styles.salir}
-      >
-        <Text style={styles.textoSalir}>SALIR</Text>
-      </TouchableOpacity>
+      <ButtonExit />
 
       {state && state.length === 0 ? (
         <Text style={styles.texto}>Usuario no posee transacciones</Text>

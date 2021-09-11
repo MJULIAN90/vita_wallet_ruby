@@ -1,24 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { styles } from "../style/Trade";
-import {
-  View,
-  Picker,
-  Button,
-  TextInput,
-  Text,
-  TouchableOpacity,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, Picker, Button, TextInput, Text } from "react-native";
 import axios from "axios";
 import { UserContext } from "../Context";
 import { conversorQuanti } from "../conversor/conversorQuanti";
 import { conversor } from "./../conversor/conversor";
+import ButtonExit from "./ButtonExit";
 
 const Trade = () => {
   let REACT_APP_API = "http://localhost:3000";
   const context = useContext(UserContext);
   const { userid, setTransactionsH, transactionsH } = context;
-  const navigation = useNavigation();
 
   const [selectedValue, setSelectedValue] = useState("usd");
   const [selectTrade, setselectTrade] = useState("buy");
@@ -73,12 +65,14 @@ const Trade = () => {
     let btcprice = price.data.response;
 
     if (selectedValue === "btc" && quantity !== "") {
-      //  let info = parseFloat(quantity) * parseFloat(btcprice);
+      if (quantity.includes(".")) {
+        setQuantity("");
+        return alert("Debes usar ',' para la operacion con BTC");
+      }
       let info = parseFloat(conversorQuanti(quantity) * btcprice);
       return setTotalChange(info);
     }
     if (selectedValue === "usd" && quantity !== "") {
-      //let info = parseFloat(quantity) / parseFloat(btcprice);
       let info = parseFloat(conversorQuanti(quantity) / btcprice);
 
       return setTotalChange(info);
@@ -95,7 +89,6 @@ const Trade = () => {
       if (selectedValue === "usd") cReceive = "btc";
       if (selectedValue === "btc") cReceive = "usd";
 
-      //aca
       var quantityTotal = conversorQuanti(quantity);
 
       const obj = {
@@ -159,13 +152,7 @@ const Trade = () => {
 
   return (
     <View style={styles.inicio}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Login")}
-        style={styles.salir}
-      >
-        <Text style={styles.textoSalir}>SALIR</Text>
-      </TouchableOpacity>
-
+      <ButtonExit />
       <View style={styles.balance}>
         <Text style={styles.negrita}>TU BALANCE</Text>
         <Text style={styles.negrita}>

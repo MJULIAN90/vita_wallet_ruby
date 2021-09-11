@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { styles } from "./../style/Dashboard";
 import { conversor } from "../conversor/conversor";
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  TouchableOpacity,
-  Image,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { View, Text, ActivityIndicator, Image } from "react-native";
 import axios from "axios";
+import ButtonExit from "./ButtonExit";
 
 const Dashboard = () => {
   let REACT_APP_API = "http://localhost:3000";
   const [state, setstate] = useState(false);
-  const navigation = useNavigation();
 
   const api = async () => {
     let price = await axios.get(`${REACT_APP_API}/price`);
@@ -32,13 +25,7 @@ const Dashboard = () => {
 
   return (
     <View style={styles.inicio}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Login")}
-        style={styles.salir}
-      >
-        <Text style={styles.textoSalir}>SALIR</Text>
-      </TouchableOpacity>
-
+      <ButtonExit />
       <View style={styles.info}>
         <Text style={styles.texto}>PRECIO BTC </Text>
         {!state ? (
